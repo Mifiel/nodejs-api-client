@@ -15,6 +15,12 @@ export default class Model implements Base {
     if (this.multipart) {
       type = TYPES.multipart
     }
+    for (const property in this.properties) {
+      const val = this.properties[property]
+      if (val instanceof Array || val instanceof Object) {
+        this.properties[property] = JSON.stringify(val)
+      }
+    }
     return Connection.post(this.resource, this.properties, type)
   }
 }
