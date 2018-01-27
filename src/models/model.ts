@@ -1,13 +1,19 @@
 import Base from './base'
 import { TYPES, Connection } from '../connection'
 
-export default class Model implements Base {
+export default abstract class Model implements Base {
   multipart: boolean = null;
-  resource: string = null;
+  static resource: string
   protected properties: any
 
   constructor(args: Object) {
     this.properties = args;
+  }
+
+  abstract get resource(): string
+
+  static find(id: string | number, query?: Object): Promise<Object> {
+    return Connection.get(this.resource, { id: id })
   }
 
   save(): Promise<Object> {

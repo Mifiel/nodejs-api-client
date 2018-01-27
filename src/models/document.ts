@@ -6,10 +6,14 @@ import Model from './model'
 
 export default class Document extends Model implements Base {
   multipart = false
-  resource = 'documents'
+  static resource = 'documents'
 
   constructor(args?: Object) {
     super(args);
+  }
+
+  get resource() {
+    return Document.resource
   }
 
   static getHash(filename: string) {

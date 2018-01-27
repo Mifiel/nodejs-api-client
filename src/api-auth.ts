@@ -2,7 +2,7 @@ import * as request from 'request'
 import * as Crypto from 'crypto'
 
 export default class ApiAuth {
-  request: request.Request
+  request: any
   hasAuth: boolean
   sentAuth: boolean
   appID: string

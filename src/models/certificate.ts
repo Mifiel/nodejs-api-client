@@ -5,10 +5,14 @@ import Model from './model'
 
 export default class Certificate extends Model implements Base {
   multipart = true
-  resource = 'keys'
+  static resource = 'keys'
 
   constructor(args?: Object) {
     super(args);
+  }
+
+  get resource() {
+    return Certificate.resource
   }
 
   save(): Promise<Object> {

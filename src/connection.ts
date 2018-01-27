@@ -9,8 +9,12 @@ export enum TYPES {
   'multipart'
 }
 
+export interface Payload {
+  [selector: string]: object | string
+}
+
 export class Connection {
-  static post(path: string, payload: Object | Array<any>, type?: number): Promise<any> {
+  static post(path: string, payload: Payload | Array<Payload>, type?: number): Promise<any> {
     if (path[0] !== '/') {
       path = `/${path}`
     }
@@ -45,6 +49,10 @@ export class Connection {
       apiAuth.init(Config.appID, Config.appSecret)
       apiAuth.onRequest()
     })
+  }
+
+  static get(path: string, query?: Object): Promise<Object> {
+    return Promise.resolve(query)
   }
 
   private static parseBody(body: any): Object {

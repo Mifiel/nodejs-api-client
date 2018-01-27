@@ -1,11 +1,14 @@
-export default class User {
-  private properties: Object
+import Base from './base'
+import Model from './model'
 
-  constructor(args: Object) {
-    this.properties = args;
+export default class User extends Model implements Base {
+  static resource = 'users'
+
+  constructor(args?: Object) {
+    super(args);
   }
 
-  save() {
-
+  get resource() {
+    return User.resource
   }
 }
