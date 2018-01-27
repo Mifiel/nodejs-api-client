@@ -15,35 +15,33 @@ export interface Payload {
 
 export class Connection {
   static post(path: string, payload: Payload | Array<Payload>, type?: number): Promise<any> {
-    if (path[0] !== '/') {
-      path = `/${path}`
+    const options: request.Options = {
+      url: path,
+      method: 'POST'
     }
+    if (type === TYPES.multipart) {
+      options.formData = payload
+    } else {
+      options.json = payload
+    }
+    return this.execute(options)
+  }
+
+  static get(path: string, query?: Object): Promise<any> {
+    return this.execute({
+      url: path,
+      method: 'GET',
+      qs: query
+    })
+  }
+
+  private static execute(options: any): Promise<any> {
+    if (options.url[0] !== '/') {
+      options.url = `/${options.url}`
+    }
+    options.baseUrl = Config.url
     return new Promise((resolve, reject) => {
-      const options: request.Options = {
-        url: path,
-        baseUrl: Config.url,
-        method: 'POST',
-        callback: (error, response, body) => {
-          if (error) {
-            return reject(error)
-          }
-          if (response.statusCode >= 200 && response.statusCode < 300) {
-            return resolve(this.parseBody(body))
-          }
-          reject({
-            status: {
-              code: response.statusCode,
-              message: response.statusMessage
-            },
-            error: this.parseBody(body)
-          })
-        }
-      }
-      if (type === TYPES.multipart) {
-        options.formData = payload
-      } else {
-        options.json = payload
-      }
+      options.callback = this.callbackHandler(resolve, reject)
       const req = request(options)
       const apiAuth = new ApiAuth(req)
       apiAuth.init(Config.appID, Config.appSecret)
@@ -51,8 +49,22 @@ export class Connection {
     })
   }
 
-  static get(path: string, query?: Object): Promise<Object> {
-    return Promise.resolve(query)
+  private static callbackHandler(resolve: Function, reject: Function) {
+    return (error: Error, response: any, body: any) => {
+      if (error) {
+        return reject(error)
+      }
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return resolve(this.parseBody(body))
+      }
+      reject({
+        status: {
+          code: response.statusCode,
+          message: response.statusMessage
+        },
+        error: this.parseBody(body)
+      })
+    }
   }
 
   private static parseBody(body: any): Object {

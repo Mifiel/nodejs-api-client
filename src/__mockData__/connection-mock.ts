@@ -4,11 +4,11 @@ interface Model {
 
 const models: Model = {
   documents: [{
-    id: 'some-id',
+    id: 'good-id',
     original_hash: 'original-hash'
   }],
   keys: [{
-    id: 'some-id',
+    id: 'good-id',
     cer_hex: 'certificate-hex-string'
   }]
 }

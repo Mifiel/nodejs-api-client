@@ -2,7 +2,7 @@ import Base from './base'
 import { TYPES, Connection } from '../connection'
 
 export default abstract class Model implements Base {
-  multipart: boolean = null;
+  multipart: boolean
   static resource: string
   protected properties: any
 

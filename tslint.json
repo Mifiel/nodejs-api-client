@@ -17,11 +17,11 @@
     "no-var-keyword": true,
     "quotemark": [
       true,
-      "double",
+      "single",
       "avoid-escape"
     ],
     "semicolon": [
-      true,
+      false,
       "always",
       "ignore-bound-class-methods"
     ],

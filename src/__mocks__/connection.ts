@@ -24,9 +24,11 @@ export class Connection {
   }
 
   static get(path: string, query?: Payload): Promise<any> {
-    if (query.id === requestErrors.get.notFoundId) {
+    if (query && query.id === requestErrors.get.notFoundId) {
       return Promise.reject({ errors: ['does not exists']  })
     }
-    return Promise.resolve({ id: query.id })
+    const mocked = mocks.get(path)
+    const ret = query ? mocked[0] : mocked
+    return Promise.resolve(ret)
   }
 }

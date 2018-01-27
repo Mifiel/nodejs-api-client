@@ -8,7 +8,7 @@ export default class ApiAuth {
   appID: string
   secret: string
 
-  constructor(req: request.Request) {
+  constructor(req?: request.Request) {
     this.request = req
   }
 
@@ -22,16 +22,26 @@ export default class ApiAuth {
   }
 
   onRequest() {
-    const headers = this.request._form && this.request._form.getHeaders()
-    const contentType = headers && headers['content-type'] || 'application/json'
+    const reqHeaders = this.request._form && this.request._form.getHeaders()
+    const contentType = reqHeaders && reqHeaders['content-type'] || 'application/json'
     const method = this.request.method
     const path = this.request.path
-    const [date, md5, authHeader] = this.digest(method, contentType, path)
-    this.request.setHeader('Authorization', authHeader)
-    this.request.setHeader('Date', date)
-    this.request.setHeader('Content-Type', contentType)
-    this.request.setHeader('Content-MD5', '')
+    const headers = this.buildHeaders(method, contentType, path)
+    this.request.setHeader('Authorization', headers.authorization)
+    this.request.setHeader('Date', headers.date)
+    this.request.setHeader('Content-Type', headers.contentType)
+    this.request.setHeader('Content-MD5', headers.ContentMD5)
     this.sentAuth = true
+  }
+
+  buildHeaders(method: string, contentType: string, path: string) {
+    const [date, md5, authHeader] = this.digest(method, contentType, path)
+    return {
+      authorization: authHeader,
+      date: date,
+      contentType: contentType,
+      ContentMD5: md5
+    }
   }
 
   private digest(method: string, contentType: string, path: string): Array<string> {
