@@ -12,6 +12,10 @@ export default abstract class Model implements Base {
 
   abstract get resource(): string
 
+  static all(query? :Object): Promise<Array<Object>> {
+    return Connection.get(this.resource, query)
+  }
+
   static find(id: string | number, query?: Object): Promise<Object> {
     return Connection.get(this.resource, { id: id })
   }

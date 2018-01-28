@@ -31,3 +31,11 @@ describe('create a certificate', () => {
     })
   })
 })
+
+describe('get all certificates',  () => {
+  it('should fech all docs', () => {
+    const spy = jest.spyOn(Connection, 'get')
+    const promise = Certificate.all()
+    expect(promise).resolves.toHaveLength(1)
+  })
+})

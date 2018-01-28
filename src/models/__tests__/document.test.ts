@@ -104,3 +104,11 @@ describe('get a document', () => {
     })
   })
 })
+
+describe('get all documents',  () => {
+  it('should fech all docs', () => {
+    const spy = jest.spyOn(Connection, 'get')
+    const promise = Document.all()
+    expect(promise).resolves.toHaveLength(1)
+  })
+})
