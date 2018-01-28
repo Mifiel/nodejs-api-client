@@ -11,7 +11,7 @@ export interface Payload {
 
 export class Connection {
   static post(path: string, payload: Payload, type?: number): Promise<any> {
-    const reqError = requestErrors.post.models(path)
+    const reqError = requestErrors.post.getModel(path)
     if (reqError.exists()) {
       for (const key in payload) {
         const error = reqError.resp(key)
@@ -20,7 +20,13 @@ export class Connection {
         }
       }
     }
-    return Promise.resolve(mocks.get(path)[0])
+    try {
+      let response = mocks.get(path)
+      response = response instanceof Array ? response[0] : response
+      return Promise.resolve(response)
+    } catch (err) {
+      throw `Debug: Define '${path}' in conntection-mock.ts`
+    }
   }
 
   static get(path: string, query?: Payload): Promise<any> {

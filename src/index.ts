@@ -1,11 +1,7 @@
-import { Document, Certificate, User } from './models'
+import * as Models from './models'
 import Config from './config'
 
 export default {
-  Models: {
-    Document,
-    Certificate,
-    User
-  },
+  Models,
   Config
 }

@@ -15,10 +15,17 @@ const models: Model = {
     id: 'good-id',
     name: 'Jonh Doe',
     email: 'good@email.com'
+  }],
+  templates: [{
+    id: 'good-id',
+    name: 'Some Template',
+    content: '<div><field name="date" type="date">DATE</field></div>'
   }]
 }
 
 models['users/me'] = models.users[0]
+models['documents/good-id/generate_document'] = models.documents[0]
+models['documents/good-id/generate_documents'] = { status: 'success' }
 
 export const mocks = {
   get: (name: string) => {
@@ -50,6 +57,11 @@ const errors: ErrorObject = {
       error: 'Invalid user'
     }
   },
+  templates: {
+    name: {
+      key: 'bad-name',
+      error: 'Invalid name'
+    }
   }
 }
 
@@ -58,7 +70,7 @@ export const requestErrors = {
     notFoundId: 'not-found'
   },
   post: {
-    models: (resource: string) => {
+    getModel: (resource: string) => {
       return {
         exists: () => {
           return !!errors[resource]
