@@ -1,5 +1,5 @@
 interface Model {
-  [modelName: string]: Array<Object>
+  [modelName: string]: any
 }
 
 const models: Model = {
@@ -10,16 +10,21 @@ const models: Model = {
   keys: [{
     id: 'good-id',
     cer_hex: 'certificate-hex-string'
+  }],
+  users: [{
+    id: 'good-id',
+    name: 'Jonh Doe',
+    email: 'good@email.com'
   }]
 }
+
+models['users/me'] = models.users[0]
 
 export const mocks = {
   get: (name: string) => {
     return models[name]
   }
 }
-
-type Index = 'documents' | 'keys' | 'templates'
 
 interface Err {
   key: string,
@@ -38,6 +43,13 @@ const errors: ErrorObject = {
       key: 'bad-hash',
       error: 'Not a valid hash'
     }
+  },
+  users: {
+    email: {
+      key: 'bad@email.com',
+      error: 'Invalid user'
+    }
+  },
   }
 }
 
