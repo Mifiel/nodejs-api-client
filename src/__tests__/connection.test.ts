@@ -1,4 +1,4 @@
-import { Connection } from '../connection'
+import { TYPES, Connection } from '../connection'
 import ApiAuth from '../api-auth'
 import Config from '../config'
 
@@ -9,9 +9,20 @@ import * as request from 'request'
 Config.setTokens('appId', 'appSecret')
 afterEach(request.__clearCbkRespnse)
 
-const methods = ['post', 'get']
-methods.forEach(method => {
+describe('#post with multipart', () => {
+  it('should send a multipart header', () => {
+    const spy = jest.spyOn(Connection, 'execute')
+    Connection.post('documents', { name: 'some.pdf' }, TYPES.multipart)
+    expect(spy).toHaveBeenCalledWith(expect.objectContaining({
+      url: expect.stringMatching('documents'),
+      method: expect.stringMatching('POST'),
+      formData: expect.objectContaining({ name: expect.stringMatching('some.pdf') })
+    }))
+  })
+})
 
+const methods = ['post', 'put', 'get', 'delete']
+methods.forEach(method => {
   describe(`#${method}`, () => {
     describe('correct', () => {
       it('should resolve the promise', () => {

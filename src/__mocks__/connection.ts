@@ -29,6 +29,17 @@ export class Connection {
     }
   }
 
+  static delete(path): Promise<any> {
+    let id = null
+    if (path.indexOf('/')) {
+      id = path.split('/').reverse()[0]
+    }
+    if (id === requestErrors.get.notFoundId) {
+      return Promise.reject({ errors: ['does not exists']  })
+    }
+    return Promise.resolve({ status: 'success', message: 'Deleted' })
+  }
+
   static get(path: string, query?: Payload): Promise<any> {
     if (query && query.id === requestErrors.get.notFoundId) {
       return Promise.reject({ errors: ['does not exists']  })

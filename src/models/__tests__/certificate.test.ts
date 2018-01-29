@@ -1,4 +1,4 @@
-import { Connection } from '../../connection';
+import { Payload, Connection } from '../../connection';
 import Mifiel from '../../'
 
 jest.mock('../../connection')
@@ -28,6 +28,34 @@ describe('create a certificate', () => {
         file: 'bad-certificate'
       })
       expect(cer.save).toThrowError()
+    })
+  })
+})
+
+describe('delete a certificate', () => {
+  describe('a existent one', () => {
+    it('should respond 200 OK', () => {
+      const spy = jest.spyOn(Connection, 'delete')
+      const tmp = new Certificate({ id: 'good-id' })
+      const promise = tmp.delete()
+      expect(promise).resolves.toHaveProperty('status')
+      expect(spy).toHaveBeenCalledWith('keys/good-id')
+      return promise.then((resp: Payload) => {
+        expect(resp.status).toBe('success')
+      })
+    })
+  })
+
+  describe('a none existent one', () => {
+    it('should respond 400 OK', () => {
+      const spy = jest.spyOn(Connection, 'delete')
+      const tmp = new Certificate({ id: 'not-found' })
+      const promise = tmp.delete()
+      expect(promise).rejects.toHaveProperty('errors')
+      expect(spy).toHaveBeenCalledWith('keys/not-found')
+      return promise.catch((resp: Payload) => {
+        expect(resp.errors).toContain('does not exists')
+      })
     })
   })
 })

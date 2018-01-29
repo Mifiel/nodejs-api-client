@@ -35,6 +35,20 @@ export class Connection {
     })
   }
 
+  static delete(path: string): Promise<any> {
+    return this.execute({
+      url: path,
+      method: 'DELETE'
+    })
+  }
+
+  static put(path: string, payload: Payload): Promise<any> {
+    return this.execute({
+      url: path,
+      method: 'PUT'
+    })
+  }
+
   private static execute(options: any): Promise<any> {
     if (options.url[0] !== '/') {
       options.url = `/${options.url}`

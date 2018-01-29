@@ -40,6 +40,34 @@ describe('create a template', () => {
   })
 })
 
+describe('delete a template', () => {
+  describe('a existent one', () => {
+    it('should respond 200 OK', () => {
+      const spy = jest.spyOn(Connection, 'delete')
+      const tmp = new Template({ id: 'good-id' })
+      const promise = tmp.delete()
+      expect(promise).resolves.toHaveProperty('status')
+      expect(spy).toHaveBeenCalledWith('templates/good-id')
+      return promise.then((resp: Payload) => {
+        expect(resp.status).toBe('success')
+      })
+    })
+  })
+
+  describe('a none existent one', () => {
+    it('should respond 400 OK', () => {
+      const spy = jest.spyOn(Connection, 'delete')
+      const tmp = new Template({ id: 'not-found' })
+      const promise = tmp.delete()
+      expect(promise).rejects.toHaveProperty('errors')
+      expect(spy).toHaveBeenCalledWith('templates/not-found')
+      return promise.catch((resp: Payload) => {
+        expect(resp.errors).toContain('does not exists')
+      })
+    })
+  })
+})
+
 describe('get a template', () => {
   describe('a existent one', () => {
     it('should respond 200 OK', () => {

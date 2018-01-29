@@ -73,6 +73,34 @@ describe('create a document', () => {
   })
 })
 
+describe('delete a document', () => {
+  describe('a existent one', () => {
+    it('should respond 200 OK', () => {
+      const spy = jest.spyOn(Connection, 'delete')
+      const tmp = new Document({ id: 'good-id' })
+      const promise = tmp.delete()
+      expect(promise).resolves.toHaveProperty('status')
+      expect(spy).toHaveBeenCalledWith('documents/good-id')
+      return promise.then((resp: Payload) => {
+        expect(resp.status).toBe('success')
+      })
+    })
+  })
+
+  describe('a none existent one', () => {
+    it('should respond 400 OK', () => {
+      const spy = jest.spyOn(Connection, 'delete')
+      const tmp = new Document({ id: 'not-found' })
+      const promise = tmp.delete()
+      expect(promise).rejects.toHaveProperty('errors')
+      expect(spy).toHaveBeenCalledWith('documents/not-found')
+      return promise.catch((resp: Payload) => {
+        expect(resp.errors).toContain('does not exists')
+      })
+    })
+  })
+})
+
 describe('get a document', () => {
   describe('a existent one', () => {
     it('should respond 200 OK', () => {

@@ -20,7 +20,17 @@ export default abstract class Model implements Base {
     return Connection.get(this.resource, { id: id })
   }
 
+  delete(): Promise<Object> {
+    if (!this.properties.id) {
+      throw 'To delete the model you must instantiate it with an id'
+    }
+    return Connection.delete(`${this.resource}/${this.properties.id}`)
+  }
+
   save(): Promise<Object> {
+    if (this.properties.id) {
+      return Connection.put(`${this.resource}/${this.properties.id}`, this.properties)
+    }
     let type = TYPES.json
     if (this.multipart) {
       type = TYPES.multipart
