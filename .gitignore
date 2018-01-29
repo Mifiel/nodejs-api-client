@@ -58,4 +58,3 @@ typings/
 .env
 
 *.sublime-workspace
-dist
