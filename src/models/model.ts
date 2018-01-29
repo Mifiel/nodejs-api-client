@@ -17,7 +17,7 @@ export default abstract class Model implements Base {
   }
 
   static find(id: string | number, query?: Object): Promise<Object> {
-    return Connection.get(this.resource, { id: id })
+    return Connection.get(`${this.resource}/${id}`)
   }
 
   delete(): Promise<Object> {

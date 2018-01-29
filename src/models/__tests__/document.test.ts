@@ -1,8 +1,8 @@
-import { Connection, Payload } from '../../connection';
-import Mifiel from '../../';
+import { Connection, Payload } from '../../connection'
+import Mifiel from '../../'
 
 jest.mock('../../connection')
-const { Document } = Mifiel.Models;
+const { Document } = Mifiel.Models
 
 describe('getHash', () => {
   it('should get the hash of the document', () => {
@@ -107,26 +107,20 @@ describe('get a document', () => {
       const spy = jest.spyOn(Connection, 'get')
       const promise = Document.find('good-id')
       expect(promise).resolves.toHaveProperty('id')
-      expect(spy).toHaveBeenCalledWith(
-        'documents',
-        { id: 'good-id' }
-      )
-      promise.then((resp: Payload) => {
+      expect(spy).toHaveBeenCalledWith('documents/good-id')
+      return promise.then((resp: Payload) => {
         expect(resp.id).toBe('good-id')
       })
     })
   })
 
-  describe('a none existent one', () => {
-    it('should respond 400 OK', () => {
+  describe('an unexistent one', () => {
+    it('should respond 404 NOT_FOUND', () => {
       const spy = jest.spyOn(Connection, 'get')
       const promise = Document.find('not-found')
       expect(promise).rejects.toHaveProperty('errors')
-      expect(spy).toHaveBeenCalledWith(
-        'documents',
-        { id: 'not-found' }
-      )
-      promise.catch((resp: Payload) => {
+      expect(spy).toHaveBeenCalledWith('documents/not-found')
+      return promise.catch((resp: Payload) => {
         expect(resp.errors).toContain('does not exists')
       })
     })

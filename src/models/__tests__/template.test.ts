@@ -74,11 +74,8 @@ describe('get a template', () => {
       const spy = jest.spyOn(Connection, 'get')
       const promise = Template.find('good-id')
       expect(promise).resolves.toHaveProperty('id')
-      expect(spy).toHaveBeenCalledWith(
-        'templates',
-        { id: 'good-id' }
-      )
-      promise.then((resp: Payload) => {
+      expect(spy).toHaveBeenCalledWith('templates/good-id')
+      return promise.then((resp: Payload) => {
         expect(resp.id).toBe('good-id')
       })
     })
@@ -89,11 +86,8 @@ describe('get a template', () => {
       const spy = jest.spyOn(Connection, 'get')
       const promise = Template.find('not-found')
       expect(promise).rejects.toHaveProperty('errors')
-      expect(spy).toHaveBeenCalledWith(
-        'templates',
-        { id: 'not-found' }
-      )
-      promise.catch((resp: Payload) => {
+      expect(spy).toHaveBeenCalledWith('templates/not-found')
+      return promise.catch((resp: Payload) => {
         expect(resp.errors).toContain('does not exists')
       })
     })

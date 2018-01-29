@@ -24,6 +24,8 @@ const models: Model = {
 }
 
 models['users/me'] = models.users[0]
+models['documents/good-id'] = models.documents[0]
+models['templates/good-id'] = models.templates[0]
 models['documents/good-id/generate_document'] = models.documents[0]
 models['documents/good-id/generate_documents'] = { status: 'success' }
 
