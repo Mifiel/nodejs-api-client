@@ -29,7 +29,18 @@ export class Connection {
     }
   }
 
-  static delete(path): Promise<any> {
+  static put(path: string): Promise<any> {
+    let id = null
+    if (path.indexOf('/')) {
+      id = path.split('/').reverse()[0]
+    }
+    if (id === requestErrors.get.notFoundId) {
+      return Promise.reject({ errors: ['does not exists']  })
+    }
+    return Promise.resolve({ status: 'success', message: 'Deleted' })
+  }
+
+  static delete(path: string): Promise<any> {
     let id = null
     if (path.indexOf('/')) {
       id = path.split('/').reverse()[0]
