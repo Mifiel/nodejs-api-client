@@ -1,5 +1,5 @@
 import { Payload, Connection } from '../../connection';
-import Model from '../model'
+import { Model } from '../model'
 
 jest.mock('../../connection')
 
