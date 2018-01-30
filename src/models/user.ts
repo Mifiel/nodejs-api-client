@@ -13,6 +13,12 @@ export default class User extends Model implements Base {
     return User.resource
   }
 
+  static setupWidget(args: { email: string, tax_id: string, callback_url?: string}) {
+    if (!args.email) throw 'email is required'
+    if (!args.tax_id) throw 'tax_id is required'
+    return Connection.post(`${this.resource}/setup-widget`, args)
+  }
+
   static me(): Promise<Object> {
     return Connection.get(`${this.resource}/me`)
   }

@@ -27,6 +27,7 @@ const models: Model = {
 }
 
 models['users/me'] = models.users[0]
+models['users/setup-widget'] = { widget_id: 'some-widget-id' }
 models['documents/good-id'] = models.documents[0]
 models['templates/good-id'] = models.templates[0]
 models['test-model/some-id'] = models['test-model'][0]
