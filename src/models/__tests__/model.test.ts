@@ -1,8 +1,10 @@
 import { Payload, Connection } from '../../connection';
 import Model from '../model'
 
+jest.mock('../../connection')
+
 export default class ModelTest extends Model {
-  resource = 'model-test'
+  resource = 'test-model'
 }
 
 describe('#delete', () => {
@@ -17,12 +19,30 @@ describe('#delete', () => {
 })
 
 describe('#get', () => {
+  describe('without an id', () => {
+    it('should make a put', () => {
+      const spy = jest.spyOn(Connection, 'post')
+      const tmp = new ModelTest({})
+      const promis = tmp.save()
+      expect(spy).toHaveBeenCalledWith('test-model', {}, 0)
+      return promis.then(resp => {
+        expect(resp).toMatchObject({ id: 'some-id' })
+      })
+    })
+  })
+
   describe('with an id', () => {
     it('should make a put', () => {
       const spy = jest.spyOn(Connection, 'put')
       const tmp = new ModelTest({ id: 'some-id' })
-      tmp.save()
-      expect(spy).toHaveBeenCalledWith('model-test/some-id', { id: 'some-id' })
+      const promis = tmp.save()
+      expect(spy).toHaveBeenCalledWith('test-model/some-id', { id: 'some-id' })
+      return promis.then(resp => {
+        expect(resp).toMatchObject(expect.objectContaining({
+          message: 'Deleted',
+          status: 'success'
+        }))
+      })
     })
   })
 })

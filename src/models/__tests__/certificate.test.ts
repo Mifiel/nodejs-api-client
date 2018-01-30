@@ -22,6 +22,15 @@ describe('create a certificate', () => {
     })
   })
 
+  describe('without a file', () => {
+    it('should POST it', () => {
+      const cer = new Certificate()
+      const spy = jest.spyOn(Connection, 'post')
+      expect(cer.save()).resolves.toHaveProperty('cer_hex')
+      expect(spy).toHaveBeenCalledWith('keys', {}, 1)
+    })
+  })
+
   describe('with unexistant file', () => {
     it('should throw an error', () => {
       const cer = new Certificate({

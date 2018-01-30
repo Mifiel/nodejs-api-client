@@ -20,12 +20,16 @@ const models: Model = {
     id: 'good-id',
     name: 'Some Template',
     content: '<div><field name="date" type="date">DATE</field></div>'
+  }],
+  'test-model': [{
+    id: 'some-id'
   }]
 }
 
 models['users/me'] = models.users[0]
 models['documents/good-id'] = models.documents[0]
 models['templates/good-id'] = models.templates[0]
+models['test-model/some-id'] = models['test-model'][0]
 models['documents/good-id/generate_document'] = models.documents[0]
 models['documents/good-id/generate_documents'] = { status: 'success' }
 

@@ -7,7 +7,7 @@ export default abstract class Model implements Base {
   protected properties: any
 
   constructor(args: Object) {
-    this.properties = args;
+    this.properties = args || {}
   }
 
   abstract get resource(): string
