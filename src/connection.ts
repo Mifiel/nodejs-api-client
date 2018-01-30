@@ -27,7 +27,7 @@ export class Connection {
     return this.execute(options)
   }
 
-  static get(path: string, query?: Object): Promise<any> {
+  static get(path: string, query?: object): Promise<any> {
     return this.execute({
       url: path,
       method: 'GET',
@@ -54,7 +54,7 @@ export class Connection {
       options.url = `/${options.url}`
     }
     options.baseUrl = Config.url
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve: Function, reject: Function) => {
       options.callback = this.callbackHandler(resolve, reject)
       const req = request(options)
       const apiAuth = new ApiAuth(req)
@@ -81,7 +81,7 @@ export class Connection {
     }
   }
 
-  private static parseBody(body: any): Object {
+  private static parseBody(body: any): object {
     try {
       return JSON.parse(body)
     } catch (e) {

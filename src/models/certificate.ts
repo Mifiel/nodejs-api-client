@@ -1,13 +1,13 @@
 import * as fs from 'fs'
 
 import Base from './base'
-import Model from './model'
+import { Payload, Model } from './model'
 
 export default class Certificate extends Model implements Base {
   multipart = true
   static resource = 'keys'
 
-  constructor(args?: Object) {
+  constructor(args?: Payload) {
     super(args);
   }
 
@@ -15,7 +15,7 @@ export default class Certificate extends Model implements Base {
     return Certificate.resource
   }
 
-  save(): Promise<Object> {
+  save(): Promise<object> {
     if (this.properties.file) {
       this.properties.cer_file = fs.createReadStream(this.properties.file);
     }

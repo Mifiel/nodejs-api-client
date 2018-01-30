@@ -1,33 +1,37 @@
 import Base from './base'
 import { TYPES, Connection } from '../connection'
 
-export default abstract class Model implements Base {
+export interface Payload {
+  [selector: string]: any
+}
+
+export abstract class Model implements Base {
   multipart: boolean
   static resource: string
-  protected properties: any
+  protected properties: Payload
 
-  constructor(args: Object) {
+  constructor(args: Payload) {
     this.properties = args || {}
   }
 
   abstract get resource(): string
 
-  static all(query?: Object): Promise<Array<Object>> {
+  static all(query?: object): Promise<Array<object>> {
     return Connection.get(this.resource, query)
   }
 
-  static find(id: string | number, query?: Object): Promise<Object> {
+  static find(id: string | number, query?: object): Promise<object> {
     return Connection.get(`${this.resource}/${id}`)
   }
 
-  delete(): Promise<Object> {
+  delete(): Promise<object> {
     if (!this.properties.id) {
       throw 'To delete the model you must instantiate it with an id'
     }
     return Connection.delete(`${this.resource}/${this.properties.id}`)
   }
 
-  save(): Promise<Object> {
+  save(): Promise<object> {
     if (this.properties.id) {
       return Connection.put(`${this.resource}/${this.properties.id}`, this.properties)
     }
