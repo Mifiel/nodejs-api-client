@@ -7,7 +7,8 @@
     "tslint": "tslint -c tslint.json -p tsconfig.json",
     "test": "jest --forceExit --coverage --verbose",
     "watch-test": "jest --forceExit --coverage --verbose --watch",
-    "build-ts": "tsc",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "build": "tsc",
     "watch-ts": "tsc -w"
   },
   "repository": {
@@ -30,6 +31,7 @@
   "devDependencies": {
     "@types/jest": "^22.1.0",
     "@types/request": "^2.0.13",
+    "coveralls": "^3.0.0",
     "istanbul": "^0.4.5",
     "jest": "^22.1.4",
     "nock": "^9.1.6",
