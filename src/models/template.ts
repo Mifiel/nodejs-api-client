@@ -11,6 +11,11 @@ export default class Template extends Model implements Base {
     super(args);
   }
 
+  static delete(id: string): Promise<object> {
+    const template = new Template({ id: id })
+    return template.delete()
+  }
+
   documents(): Promise<Array<object>> {
     return Connection.get(`${this.resource}/${this.properties.id}/documents`)
   }

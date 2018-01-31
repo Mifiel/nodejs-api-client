@@ -87,6 +87,18 @@ describe('delete a document', () => {
     })
   })
 
+  describe('with static method',  () => {
+    it('should respond 200 OK', () => {
+      const spy = jest.spyOn(Connection, 'delete')
+      const promise = Document.delete('good-id')
+      expect(promise).resolves.toHaveProperty('status')
+      expect(spy).toHaveBeenCalledWith('documents/good-id')
+      return promise.then((resp: Payload) => {
+        expect(resp.status).toBe('success')
+      })
+    })
+  })
+
   describe('a none existent one', () => {
     it('should respond 400 OK', () => {
       const spy = jest.spyOn(Connection, 'delete')
@@ -122,6 +134,54 @@ describe('get a document', () => {
       expect(spy).toHaveBeenCalledWith('documents/not-found')
       return promise.catch((resp: Payload) => {
         expect(resp.errors).toContain('does not exists')
+      })
+    })
+  })
+})
+
+const cases = [{
+  method: 'saveFile',
+  url: 'file'
+}, {
+  method: 'saveFileSigned',
+  url: 'file_signed'
+}, {
+  method: 'saveXML',
+  url: 'xml'
+}]
+cases.forEach(casee => {
+  describe(`#${casee.method}`, () => {
+    describe('a existent one', () => {
+      it('should respond 200 OK and save the file', () => {
+        const spy = jest.spyOn(Connection, 'execute')
+        const doc = new Document({ id: 'good-id' })
+        const promise = doc[casee.method]('some-path.pdf')
+        expect(promise).resolves
+        expect(spy).toHaveBeenCalledWith(
+          expect.objectContaining({
+            url: `documents/good-id/${casee.url}`
+          })
+        )
+        return promise.then(resp => {
+          expect(resp).toBe(true)
+        })
+      })
+    })
+
+    describe('an unexistent one', () => {
+      it('should respond 404 NOT_FOUND', () => {
+        const spy = jest.spyOn(Connection, 'execute')
+        const doc = new Document({ id: 'not-found' })
+        const promise = doc[casee.method]('some-path.pdf')
+        expect(promise).rejects.toHaveProperty('errors')
+        expect(spy).toHaveBeenCalledWith(
+          expect.objectContaining({
+            url: `documents/not-found/${casee.url}`
+          })
+        )
+        return promise.catch((resp: Payload) => {
+          expect(resp.errors).toContain('does not exists')
+        })
       })
     })
   })
