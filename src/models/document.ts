@@ -67,7 +67,7 @@ export default class Document extends Model implements Base {
     }
     const opts = { url: url, method: 'GET', encoding: encoding }
     return Connection.execute(opts).then(data => {
-      let writeStream = fs.createWriteStream(path, { encoding: encoding })
+      const writeStream = fs.createWriteStream(path, { encoding: encoding })
       writeStream.write(data)
       writeStream.end()
       return true
