@@ -5,5 +5,7 @@ export default class Certificate extends Model implements Base {
     static resource: string;
     constructor(args?: Payload);
     readonly resource: string;
+    static delete(id: string): Promise<object>;
+    static sat(): Promise<Array<object>>;
     save(): Promise<object>;
 }

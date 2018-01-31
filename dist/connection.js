@@ -1,16 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const request = require("request");
-const api_auth_1 = require("./api-auth");
-const config_1 = require("./config");
+var request = require("request");
+var api_auth_1 = require("./api-auth");
+var config_1 = require("./config");
 var TYPES;
 (function (TYPES) {
     TYPES[TYPES["json"] = 0] = "json";
     TYPES[TYPES["multipart"] = 1] = "multipart";
 })(TYPES = exports.TYPES || (exports.TYPES = {}));
-class Connection {
-    static post(path, payload, type) {
-        const options = {
+var Connection = /** @class */ (function () {
+    function Connection() {
+    }
+    Connection.post = function (path, payload, type) {
+        var options = {
             url: path,
             method: 'POST'
         };
@@ -21,63 +23,66 @@ class Connection {
             options.json = payload;
         }
         return this.execute(options);
-    }
-    static get(path, query) {
+    };
+    Connection.get = function (path, query) {
         return this.execute({
             url: path,
             method: 'GET',
             qs: query
         });
-    }
-    static delete(path) {
+    };
+    Connection.delete = function (path) {
         return this.execute({
             url: path,
             method: 'DELETE'
         });
-    }
-    static put(path, payload) {
+    };
+    Connection.put = function (path, payload) {
         return this.execute({
             url: path,
             method: 'PUT'
         });
-    }
-    static execute(options) {
+    };
+    Connection.execute = function (options) {
+        var _this = this;
         if (options.url[0] !== '/') {
-            options.url = `/${options.url}`;
+            options.url = "/" + options.url;
         }
         options.baseUrl = config_1.default.url;
-        return new Promise((resolve, reject) => {
-            options.callback = this.callbackHandler(resolve, reject);
-            const req = request(options);
-            const apiAuth = new api_auth_1.default(req);
+        return new Promise(function (resolve, reject) {
+            options.callback = _this.callbackHandler(resolve, reject);
+            var req = request(options);
+            var apiAuth = new api_auth_1.default(req);
             apiAuth.init(config_1.default.appID, config_1.default.appSecret);
             apiAuth.onRequest();
         });
-    }
-    static callbackHandler(resolve, reject) {
-        return (error, response, body) => {
+    };
+    Connection.callbackHandler = function (resolve, reject) {
+        var _this = this;
+        return function (error, response, body) {
             if (error) {
                 return reject(error);
             }
             if (response.statusCode >= 200 && response.statusCode < 300) {
-                return resolve(this.parseBody(body));
+                return resolve(_this.parseBody(body));
             }
             reject({
                 status: {
                     code: response.statusCode,
                     message: response.statusMessage
                 },
-                error: this.parseBody(body)
+                error: _this.parseBody(body)
             });
         };
-    }
-    static parseBody(body) {
+    };
+    Connection.parseBody = function (body) {
         try {
             return JSON.parse(body);
         }
         catch (e) {
             return body;
         }
-    }
-}
+    };
+    return Connection;
+}());
 exports.Connection = Connection;
