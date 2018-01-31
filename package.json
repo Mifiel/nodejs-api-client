@@ -1,11 +1,14 @@
 {
   "name": "mifiel",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Mifiel API Client for NodeJS",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "engines": {
+    "node": "> 3"
+  },
   "scripts": {
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
     "test": "jest --forceExit --coverage --verbose",
     "watch-test": "jest --forceExit --coverage --verbose --watch",

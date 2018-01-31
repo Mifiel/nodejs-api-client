@@ -49,7 +49,7 @@ export class Connection {
     })
   }
 
-  private static execute(options: any): Promise<any> {
+  static execute(options: any): Promise<any> {
     if (options.url[0] !== '/') {
       options.url = `/${options.url}`
     }

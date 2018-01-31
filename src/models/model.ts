@@ -1,3 +1,5 @@
+import * as fs from 'fs'
+
 import Base from './base'
 import { TYPES, Connection } from '../connection'
 
@@ -39,12 +41,17 @@ export abstract class Model implements Base {
     if (this.multipart) {
       type = TYPES.multipart
     }
+    this.cleanupPostParams()
+    return Connection.post(this.resource, this.properties, type)
+  }
+
+  private cleanupPostParams() {
     for (const property in this.properties) {
       const val = this.properties[property]
-      if (val instanceof Array || val instanceof Object) {
+      const isStream = val instanceof fs.ReadStream
+      if (!isStream && (val instanceof Array || val instanceof Object)) {
         this.properties[property] = JSON.stringify(val)
       }
     }
-    return Connection.post(this.resource, this.properties, type)
   }
 }

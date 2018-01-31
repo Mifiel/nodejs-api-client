@@ -10,7 +10,7 @@ export declare class Connection {
     static get(path: string, query?: object): Promise<any>;
     static delete(path: string): Promise<any>;
     static put(path: string, payload: Payload): Promise<any>;
-    private static execute(options);
+    static execute(options: any): Promise<any>;
     private static callbackHandler(resolve, reject);
     private static parseBody(body);
 }

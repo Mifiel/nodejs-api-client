@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Models = require("./models");
-const config_1 = require("./config");
+var Models = require("./models");
+var config_1 = require("./config");
 exports.default = {
-    Models,
+    Models: Models,
     Config: config_1.default
 };
