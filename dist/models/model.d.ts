@@ -12,4 +12,5 @@ export declare abstract class Model implements Base {
     static find(id: string | number, query?: object): Promise<object>;
     delete(): Promise<object>;
     save(): Promise<object>;
+    private cleanupPostParams();
 }

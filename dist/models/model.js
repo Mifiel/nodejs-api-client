@@ -1,37 +1,43 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const connection_1 = require("../connection");
-class Model {
-    constructor(args) {
+var fs = require("fs");
+var connection_1 = require("../connection");
+var Model = /** @class */ (function () {
+    function Model(args) {
         this.properties = args || {};
     }
-    static all(query) {
+    Model.all = function (query) {
         return connection_1.Connection.get(this.resource, query);
-    }
-    static find(id, query) {
-        return connection_1.Connection.get(`${this.resource}/${id}`);
-    }
-    delete() {
+    };
+    Model.find = function (id, query) {
+        return connection_1.Connection.get(this.resource + "/" + id);
+    };
+    Model.prototype.delete = function () {
         if (!this.properties.id) {
             throw 'To delete the model you must instantiate it with an id';
         }
-        return connection_1.Connection.delete(`${this.resource}/${this.properties.id}`);
-    }
-    save() {
+        return connection_1.Connection.delete(this.resource + "/" + this.properties.id);
+    };
+    Model.prototype.save = function () {
         if (this.properties.id) {
-            return connection_1.Connection.put(`${this.resource}/${this.properties.id}`, this.properties);
+            return connection_1.Connection.put(this.resource + "/" + this.properties.id, this.properties);
         }
-        let type = connection_1.TYPES.json;
+        var type = connection_1.TYPES.json;
         if (this.multipart) {
             type = connection_1.TYPES.multipart;
         }
-        for (const property in this.properties) {
-            const val = this.properties[property];
-            if (val instanceof Array || val instanceof Object) {
+        this.cleanupPostParams();
+        return connection_1.Connection.post(this.resource, this.properties, type);
+    };
+    Model.prototype.cleanupPostParams = function () {
+        for (var property in this.properties) {
+            var val = this.properties[property];
+            var isStream = val instanceof fs.ReadStream;
+            if (!isStream && (val instanceof Array || val instanceof Object)) {
                 this.properties[property] = JSON.stringify(val);
             }
         }
-        return connection_1.Connection.post(this.resource, this.properties, type);
-    }
-}
+    };
+    return Model;
+}());
 exports.Model = Model;
