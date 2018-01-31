@@ -17,6 +17,11 @@ export default class Document extends Model implements Base {
     return Document.resource
   }
 
+  static delete(id: string): Promise<object> {
+    const doc = new Document({ id: id })
+    return doc.delete()
+  }
+
   static createFromTemplate(args: any): Promise<object> {
     const url = `${this.resource}/${args.template_id}/generate_document`
     delete args.template_id

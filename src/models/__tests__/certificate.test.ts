@@ -55,6 +55,18 @@ describe('delete a certificate', () => {
     })
   })
 
+  describe('with static method',  () => {
+    it('should respond 200 OK', () => {
+      const spy = jest.spyOn(Connection, 'delete')
+      const promise = Certificate.delete('good-id')
+      expect(promise).resolves.toHaveProperty('status')
+      expect(spy).toHaveBeenCalledWith('keys/good-id')
+      return promise.then((resp: Payload) => {
+        expect(resp.status).toBe('success')
+      })
+    })
+  })
+
   describe('a none existent one', () => {
     it('should respond 400 OK', () => {
       const spy = jest.spyOn(Connection, 'delete')
@@ -70,9 +82,19 @@ describe('delete a certificate', () => {
 })
 
 describe('get all certificates',  () => {
-  it('should fech all docs', () => {
+  it('should fech all certificates', () => {
     const spy = jest.spyOn(Connection, 'get')
     const promise = Certificate.all()
     expect(promise).resolves.toHaveLength(1)
+    expect(spy).toHaveBeenCalledWith('keys', undefined)
+  })
+})
+
+describe('get sat certificates',  () => {
+  it('should fech sat certificates', () => {
+    const spy = jest.spyOn(Connection, 'get')
+    const promise = Certificate.sat()
+    expect(spy).toHaveBeenCalledWith('keys/sat_certificates')
+    return expect(promise).resolves.toHaveLength(1)
   })
 })

@@ -26,6 +26,7 @@ const models: Model = {
   }]
 }
 
+models['keys/sat_certificates'] = models.keys
 models['users/me'] = models.users[0]
 models['users/setup-widget'] = { widget_id: 'some-widget-id' }
 models['templates/good-id'] = models.templates[0]

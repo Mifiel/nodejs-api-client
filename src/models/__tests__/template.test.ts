@@ -54,6 +54,18 @@ describe('delete a template', () => {
     })
   })
 
+  describe('with static method',  () => {
+    it('should respond 200 OK', () => {
+      const spy = jest.spyOn(Connection, 'delete')
+      const promise = Template.delete('good-id')
+      expect(promise).resolves.toHaveProperty('status')
+      expect(spy).toHaveBeenCalledWith('templates/good-id')
+      return promise.then((resp: Payload) => {
+        expect(resp.status).toBe('success')
+      })
+    })
+  })
+
   describe('a none existent one', () => {
     it('should respond 400 OK', () => {
       const spy = jest.spyOn(Connection, 'delete')
