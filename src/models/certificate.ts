@@ -21,6 +21,10 @@ export default class Certificate extends Model implements Base {
     return cer.delete()
   }
 
+  static sat(): Promise<Array<object>> {
+    return Connection.get('keys/sat_certificates')
+  }
+
   save(): Promise<object> {
     if (this.properties.file) {
       this.properties.cer_file = fs.createReadStream(this.properties.file);
