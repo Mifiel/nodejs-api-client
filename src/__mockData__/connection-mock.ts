@@ -28,11 +28,14 @@ const models: Model = {
 
 models['users/me'] = models.users[0]
 models['users/setup-widget'] = { widget_id: 'some-widget-id' }
-models['documents/good-id'] = models.documents[0]
 models['templates/good-id'] = models.templates[0]
 models['test-model/some-id'] = models['test-model'][0]
+models['documents/good-id'] = models.documents[0]
 models['documents/good-id/generate_document'] = models.documents[0]
 models['documents/good-id/generate_documents'] = { status: 'success' }
+models['documents/good-id/file'] = new Buffer('some random data')
+models['documents/good-id/file_signed'] = new Buffer('some other random data')
+models['documents/good-id/xml'] = '<some><xml>DATA</xml></some>'
 
 export const mocks = {
   get: (name: string) => {

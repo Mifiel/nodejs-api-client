@@ -10,7 +10,7 @@ export default class Document extends Model implements Base {
   static resource = 'documents'
 
   constructor(args?: Payload) {
-    super(args);
+    super(args)
   }
 
   get resource() {
@@ -42,5 +42,30 @@ export default class Document extends Model implements Base {
       this.properties.file = fs.createReadStream(this.properties.file)
     }
     return super.save()
+  }
+
+  saveFile(path: string): Promise<boolean> {
+    return this.getAndSaveFile(`${this.resource}/${this.properties.id}/file`, path, null)
+  }
+
+  saveFileSigned(path: string): Promise<boolean> {
+    return this.getAndSaveFile(`${this.resource}/${this.properties.id}/file_signed`, path, null)
+  }
+
+  saveXML(path: string): Promise<boolean> {
+    return this.getAndSaveFile(`${this.resource}/${this.properties.id}/xml`, path)
+  }
+
+  private getAndSaveFile(url: string, path: string, encoding?: string): Promise<boolean> {
+    if (encoding === undefined) {
+      encoding = 'utf8'
+    }
+    const opts = { url: url, method: 'GET', encoding: encoding }
+    return Connection.execute(opts).then(data => {
+      let writeStream = fs.createWriteStream(path, { encoding: encoding })
+      writeStream.write(data)
+      writeStream.end()
+      return true
+    })
   }
 }

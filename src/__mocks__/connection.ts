@@ -63,4 +63,23 @@ export class Connection {
     const ret = query ? mocked[0] : mocked
     return Promise.resolve(ret)
   }
+
+  static execute(options: any): Promise<any> {
+    let id
+    const path = options.url
+    if (path.indexOf('/')) {
+      if (path.split('/').indexOf(requestErrors.get.notFoundId) !== -1) {
+        id = requestErrors.get.notFoundId
+      }
+    }
+    if (id === requestErrors.get.notFoundId) {
+      return Promise.reject({ errors: ['does not exists']  })
+    }
+    const mocked = mocks.get(path)
+    try {
+      return Promise.resolve(mocked)
+    } catch (err) {
+      throw `Debug: Define '${path}' in conntection-mock.ts`
+    }
+  }
 }
