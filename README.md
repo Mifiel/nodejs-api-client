@@ -84,10 +84,16 @@ Mifiel.Config.url = 'https://sandbox.mifiel.com/api/v1'
     doc.file
     doc.file_signed
   })
+
   // if you dont want us to have the PDF, you can just send us 
   // the original_hash and the name of the document. Both are required
+  const fs = require('fs');
+  const crypto = require('crypto');
+  const hash = crypto.createHash('sha256');
+
+  hash.update(fs.readFileSync('path/to/your_file'));
   const document = new Mifiel.Models.Document({
-    hash: Digest::SHA256.hexdigest(File.read('path/to/my-file.pdf')), 
+    hash: hash.digest('hex')
     name: 'my-file.pdf',
     signatories: [...]
   })
