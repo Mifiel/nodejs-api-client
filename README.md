@@ -71,7 +71,7 @@ Mifiel.Config.url = 'https://sandbox.mifiel.com/api/v1'
 > Either **file** or **hash** must be provided.
 
 ```javascript
-  const document = new Mifiel.Models.Document({
+  const Document = new Mifiel.Models.Document({
     file: 'path/to/my-file.pdf',
     signatories: [
       { name: 'Signer 1', email: 'signer1@email.com', tax_id: 'AAA010101AAA' },
@@ -147,7 +147,7 @@ Mifiel.Config.url = 'https://sandbox.mifiel.com/api/v1'
 - Create
   
   ```javascript
-  const certificate = new Mifiel.Models.Certificate({
+  const Certificate = new Mifiel.Models.Certificate({
     file: "path/to/my-certificate.cer"
   })
   certificate.save().then(cer => {
