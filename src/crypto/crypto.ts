@@ -8,7 +8,7 @@ export default class Crypto  {
 		const params  = { salt: AES.randomIv(8), iterations: 1000 }
 		const key = PKCS5.pbkdf2(Object.assign({}, params, {password})).toString('hex');
 		const aesParams = { key, iv: AES.randomIv(), message: document }
-		const cipherText = AES.encrypt(aesParams)
+		const cipherText = AES.encrypt(aesParams).bytes()
 		Object.assign(params, { cipherText, iv: aesParams.iv })
 		return new PKCS5(params)
 	}
