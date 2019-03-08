@@ -7,7 +7,7 @@ interface EcEncrypted {
 	mac: Buffer | string
 }
 
-export default class ECIES  {
+export default class ECIES {
 
 	static async encrypt (pubKey: Buffer, data: string): Promise<EcEncrypted> {
 		try {

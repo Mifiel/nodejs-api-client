@@ -1,0 +1,49 @@
+{
+	"masterSeed": "000102030405060708090a0b0c0d0e0f",
+	"ids": [
+		"67dd2d0a-9852-4d75-a11f-5fdda36846b8-456-1023",
+		"67dd2d0a-9852-4d75-a11f-5fdda36846b8-0-234",
+		"67dd2d0a-9852-4d75-a11f-5fdda36846b8-4-13",
+		"67dd2d0a-9852-4d75-a11f-5fdda36846b8-1-2",
+		"67dd2d0a-9852-4d75-a11f-5fdda36846b8-45-33",
+		"67dd2d0a-9852-4d75-a11f-5fdda36846b8-12-888",
+		"67dd2d0a-9852-4d75-a11f-5fdda36846b8-34-3"
+	],
+	"keys": [
+		{
+			"priv": "e615cec9f4dc47b6b6d2874b950b1e6185b09afcb4baa248931419f1e66db505",
+			"pub": "02f573918f42f613a9bffc28db4b58819cb87d2342c06ead9c805ea1ec1a13a14b",
+			"hardened": true
+		},
+		{
+			"priv": "742ba3e0912540f1a5e89b9c1e381f26945dfc660d2658aef4ab8741e1bceb43",
+			"pub": "03649af861065e98293dee9fc1382de9b237aed5eae46bb54eeea7a005fa66011b",
+			"hardened": true
+		},
+		{
+			"priv": "4c2f2d74d795486887c89e31a8f11b9024686a48471908e36be334b679cf925e",
+			"pub": "0359784f3a5706a0eafacc8203623211b6202b9b65aead37b392bf1fa4e841eac3",
+			"hardened": true
+		},
+		{
+			"priv": "bfa319f57e67ecb0d1ecdfa5bbbb04332f802081286655d476a44a3038ed6022",
+			"pub": "02348bb8c38be3c6f05767c5e6f88fd0a0f6235b2d74dc0fdd2072ff786d3098ca",
+			"hardened": true
+		},
+		{
+			"priv": "ba70ce9cfbce82ff696caecc57059cbe35ed42005ad94144ee678e0065df6015",
+			"pub": "03fc4de3c406dab26cc8a1ca801d186876172ee2b8ba81dd1050133dfc729fbce0",
+			"hardened": true
+		},
+		{
+			"priv": "0cef0f50ea92135a56e3be1bc738d92f17dedfe8a9b14b80e80ae9fabac32de2",
+			"pub": "0322193b830d0356dedeb42895f3520f92ed2ddf5aa00af613b81c1d040b15e2f0",
+			"hardened": false
+		},
+		{
+			"priv": "4f5fe53512bedf353d2950bf8d43eb3933472ef897581a2de38b9239f5afbb82",
+			"pub": "0291ef5fcc3061b99ec902b2ef2c13f16a879ee4c6a2b614a8fc2b67c2f185cf7c",
+			"hardened": false
+		}
+	]
+}

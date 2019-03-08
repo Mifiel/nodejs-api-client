@@ -13,7 +13,7 @@ export default class AES  {
 			eCipher.start({ iv: iv });
 			eCipher.update(util.createBuffer(message));
 			eCipher.finish();
-			return eCipher.output.toHex();
+			return eCipher.output;
 
 		} catch(err) {
 			throw 'Something went wrong in AES encrypt'

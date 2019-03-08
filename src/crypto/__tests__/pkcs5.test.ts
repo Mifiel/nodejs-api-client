@@ -24,7 +24,7 @@ describe('valid asn1 parsing & building', () => {
 	pkcs5Fixture.valid.forEach((item) => {
 		describe(JSON.stringify(item), () => {
 			const { asn1 } = item
-			const derObj = PKCS5.parse(asn1);
+			const derObj = PKCS5.parse(util.hexToBytes(asn1));
 			it('Should parse asn1', () => {
 				expect(derObj.toHex()).toEqual(asn1);
 			})

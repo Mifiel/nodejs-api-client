@@ -10,7 +10,7 @@ describe('#Valid data', () => {
 			describe(JSON.stringify(item), () => {
 				const { key, iv, dataToEncrypt, encrypted } = item
 				it('Should encrypt data', () => {
-					expect(AES.encrypt({key, iv, message: dataToEncrypt})).toEqual(encrypted)
+					expect(AES.encrypt({key, iv, message: dataToEncrypt}).toHex()).toEqual(encrypted)
 				})
 				it('Should decrypt data', () => {
 					expect(AES.decrypt({key, iv, cipherText: util.binary.hex.decode(encrypted) })).toEqual(dataToEncrypt)
@@ -26,5 +26,5 @@ describe('#Valid data', () => {
 			expect(AES.randomIv(32).length).toEqual(32)
 			expect(typeof AES.randomIv()).toEqual('string')
   	})
-  })  
+  })
 })

@@ -35,19 +35,21 @@
 	"homepage": "https://github.com/Mifiel/nodejs-api-client#readme",
 	"devDependencies": {
 		"@types/jest": "^22.1.0",
-		"@types/request": "^2.0.13",
 		"@types/node-forge": "^0.7.11",
+		"@types/request": "^2.0.13",
 		"coveralls": "^3.0.0",
 		"eccrypto": "1.1.0",
 		"istanbul": "^0.4.5",
 		"jest": "^22.1.4",
 		"nock": "^9.1.6",
 		"node-forge": "^0.8.0",
+		"request": "^2.83.0",
 		"ts-jest": "^22.0.1",
 		"ts-node": "^4.1.0",
 		"tslint": "^5.9.1",
-		"typescript": "^2.6.2",
-		"pryjs": "^1.0.3",
-		"request": "^2.83.0"
+		"typescript": "^2.6.2"
+	},
+	"dependencies": {
+		"bip32": "^1.0.2"
 	}
 }

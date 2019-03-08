@@ -21,17 +21,17 @@ export default class PKCS5 extends Model  {
 	get cipherText() { return this.properties.cipherText || this.fetchAsn1([1]) }
 	get asn1() { return this.properties.asn1 || this.buildAsn1() }
 
-	static pbkdf2(args: {password: string, iterations: number, keySize: number, salt: string }): Buffer {
+	static pbkdf2(args: { password: string, iterations: number, keySize?: number, salt: string }): Buffer {
 		try {
 			const { password, salt, iterations, keySize } = args
-			return pbkdf2Sync(new Buffer(password), Buffer.from(salt), iterations, keySize || 32, 'sha256')
+			return pbkdf2Sync(new Buffer(password), Buffer.from(salt), iterations, keySize || 16, 'sha256')
 		} catch(err) {
 			throw 'Something went wrong in pbkdf2'
 		}
 	}
 
 	static parse (der: string) {
-		return new PKCS5({ asn1: asn1.fromDer(util.hexToBytes(der))});
+		return new PKCS5({ asn1: asn1.fromDer(der)});
 	}
 
 	setUp() {
@@ -90,12 +90,12 @@ export default class PKCS5 extends Model  {
 	}
 
 	private getDigest(): string {
-		const digest = asn1.derToOid(this.fetchAsn1([0, 1, 0, 1, 2, 0]));
-		return digest ? pki.oids[digest] : 'hmacWithSHA256'
+		const digest = this.fetchAsn1([0, 1, 0, 1, 2, 0]);
+		return digest ? pki.oids[asn1.derToOid(digest)] : 'hmacWithSHA256'
 	}
 
 	private getCipher(): string {
-		const cipher = asn1.derToOid(this.fetchAsn1([0, 1, 1, 0]));
-		return cipher ? pki.oids[cipher] : 'aes256-CBC'
+		const cipher = this.fetchAsn1([0, 1, 1, 0]);
+		return cipher ? pki.oids[asn1.derToOid(cipher)] : 'aes256-CBC'
 	}
 }
