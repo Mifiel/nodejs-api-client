@@ -8,10 +8,10 @@
 		"node": "> 3"
 	},
 	"config": {
-		"crypto_path": "src/crypto/crypto.ts"
+		"crypto_path": "dist/crypto/crypto.js"
 	},
 	"scripts": {
-		"prepare": "npm run build",
+		"prepare": "yarn run build && yarn run build:cdn",
 		"tslint": "tslint -c tslint.json -p tsconfig.json",
 		"test": "jest --forceExit --coverage --verbose",
 		"watch-test": "jest --forceExit --coverage --verbose --watch",
@@ -22,7 +22,7 @@
 		"build:cdn:crypto": "npm-run-all --parallel crypto:*",
 		"crypto:normal": "yarn run bundle -- --entry $npm_package_config_crypto_path --outfile cdn/crypto.js --standalone Crypto",
 		"crypto:min": "yarn run bundle -- -p tinyify --entry $npm_package_config_crypto_path --outfile cdn/crypto.min.js --standalone Crypto",
-		"bundle": "browserify -p [ tsify -p ./tsconfig.bundler.json ] -t babelify"
+		"bundle": "browserify -t babelify"
 	},
 	"repository": {
 		"type": "git",
@@ -60,7 +60,6 @@
 		"tinyify": "^2.5.0",
 		"ts-jest": "^22.0.1",
 		"ts-node": "^4.1.0",
-		"tsify": "^4.0.1",
 		"tslint": "^5.9.1",
 		"typescript": "^2.6.2"
 	},
