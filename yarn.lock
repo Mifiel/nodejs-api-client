@@ -1176,7 +1176,7 @@ brorand@^1.0.1:
   resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
   integrity sha1-EsJe/kCkXjwyPrhnWgoM5XsiNx8=
 
-browser-pack-flat@^3.0.9:
+browser-pack-flat@^3.0.9, browser-pack-flat@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/browser-pack-flat/-/browser-pack-flat-3.3.0.tgz#87536bf5929f4c16cda2445a190feae4fc86a0d9"
   integrity sha512-jb9JQVHAvSD3EuehjyIOUCyevHXHSmuAbmefLHMmul3QLu1f5sqx25oC9D0df1N8zMPl9fAppaJdC8vrM4PeUA==
@@ -1603,10 +1603,26 @@ commander@^2.19.0:
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.19.0.tgz#f6198aa84e5b83c46054b94ddedbfed5ee9ff12a"
   integrity sha512-6tvAOO+D6OENvRAh524Dh9jcfKTYDQAqvqezbCW82xj5X0pSrcpxtvRKHLG0yBY6SD7PSDrJaj+0AiOcKVd1Xg==
 
+commander@~2.17.1:
+  version "2.17.1"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.17.1.tgz#bd77ab7de6de94205ceacc72f1716d29f20a77bf"
+  integrity sha512-wPMUt6FnH2yzG95SA6mzjQOEKUU3aLaDEmzs1ti+1E9h+CsrZghRlqEM/EJ4KscsQVG8uNN4uVreUeT8+drlgg==
+
 common-shakeify@^0.5.2:
   version "0.5.4"
   resolved "https://registry.yarnpkg.com/common-shakeify/-/common-shakeify-0.5.4.tgz#b232cc760ad24e8dccc0e4e04d6e0509e12909a4"
   integrity sha512-R2cFjh+3kwuNPO1QAQCFhkdu8iIQxl3cnEXO185F7cETg/CgM8OgvPI9QHtiXdDmXpfuJQ9CTGds/BqGDrvWcQ==
+  dependencies:
+    "@goto-bus-stop/common-shake" "^2.2.0"
+    convert-source-map "^1.5.1"
+    through2 "^2.0.3"
+    transform-ast "^2.4.3"
+    wrap-comment "^1.0.1"
+
+common-shakeify@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/common-shakeify/-/common-shakeify-0.6.0.tgz#34178f288f74460a8ebcce8e61ce50f22547f9b5"
+  integrity sha512-Khlxkok7vEskxsCQfa/lyTmv+ZVjNz1PMGaEImWsZzhnEqArh2yBUhOqYMkiNPbkqqcCzwA/quFkqL3zw3dgAA==
   dependencies:
     "@goto-bus-stop/common-shake" "^2.2.0"
     convert-source-map "^1.5.1"
@@ -5279,11 +5295,19 @@ uglify-js@^2.6:
   optionalDependencies:
     uglify-to-browserify "~1.0.0"
 
+uglify-js@^3.4.9:
+  version "3.4.9"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.4.9.tgz#af02f180c1207d76432e473ed24a28f4a782bae3"
+  integrity sha512-8CJsbKOtEbnJsTyv6LE6m6ZKniqMiFWmm9sRbopbkGs3gMPPfd3Fh8iIA4Ykv5MgaTbqHr4BaoGLJLZNhsrW1Q==
+  dependencies:
+    commander "~2.17.1"
+    source-map "~0.6.1"
+
 uglify-to-browserify@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/uglify-to-browserify/-/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
 
-uglifyify@^5.0.0:
+uglifyify@^5.0.0, uglifyify@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/uglifyify/-/uglifyify-5.0.1.tgz#70b1d8b413c410348c8e35e7f8bd1330a422d5f6"
   integrity sha512-PO44rgExvwj3rkK0UzenHVnPU18drBy9x9HOUmgkuRh6K2KIsDqrB5LqxGtjybgGTOS1JeP8SBc+TN5rhiva6w==

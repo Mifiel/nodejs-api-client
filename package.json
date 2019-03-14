@@ -8,10 +8,11 @@
 		"node": "> 3"
 	},
 	"config": {
-		"crypto_path": "dist/crypto/crypto.js"
+		"crypto_path": "dist/crypto/crypto.js",
+		"crypto_umd_name": "MifielCrypto"
 	},
 	"scripts": {
-		"prepare": "yarn run build && yarn run build:cdn",
+		"prepare": "npm run build",
 		"tslint": "tslint -c tslint.json -p tsconfig.json",
 		"test": "jest --forceExit --coverage --verbose",
 		"watch-test": "jest --forceExit --coverage --verbose --watch",
@@ -20,9 +21,8 @@
 		"watch-ts": "tsc -w",
 		"build:cdn": "npm-run-all --parallel build:cdn:*",
 		"build:cdn:crypto": "npm-run-all --parallel crypto:*",
-		"crypto:normal": "yarn run bundle -- --entry $npm_package_config_crypto_path --outfile cdn/crypto.js --standalone Crypto",
-		"crypto:min": "yarn run bundle -- -p tinyify --entry $npm_package_config_crypto_path --outfile cdn/crypto.min.js --standalone Crypto",
-		"bundle": "browserify -t babelify"
+		"crypto:normal": "browserify $npm_package_config_crypto_path -g [ babelify --presets [ @babel/preset-env ] ] -g [ envify --NODE_ENV production ] --standalone $npm_package_config_crypto_umd_name --outfile cdn/crypto.js",
+		"crypto:min": "browserify $npm_package_config_crypto_path -g [ babelify --presets [ @babel/preset-env ] ] -g [ envify --NODE_ENV production ] -g uglifyify -p common-shakeify -p browser-pack-flat/plugin --standalone $npm_package_config_crypto_umd_name | uglifyjs -cm > cdn/crypto.min.js"
 	},
 	"repository": {
 		"type": "git",
@@ -48,9 +48,12 @@
 		"@types/node-forge": "^0.7.11",
 		"@types/request": "^2.0.13",
 		"babelify": "^10.0.0",
+		"browser-pack-flat": "^3.3.0",
 		"browserify": "^16.2.3",
+		"common-shakeify": "^0.6.0",
 		"coveralls": "^3.0.0",
 		"eccrypto": "1.1.0",
+		"envify": "^4.1.0",
 		"istanbul": "^0.4.5",
 		"jest": "^22.1.4",
 		"nock": "^9.1.6",
@@ -61,21 +64,11 @@
 		"ts-jest": "^22.0.1",
 		"ts-node": "^4.1.0",
 		"tslint": "^5.9.1",
-		"typescript": "^2.6.2"
+		"typescript": "^2.6.2",
+		"uglify-js": "^3.4.9",
+		"uglifyify": "^5.0.1"
 	},
 	"dependencies": {
 		"bip32": "^1.0.2"
-	},
-	"browserify": {
-		"transform": [
-			[
-				"babelify",
-				{
-					"presets": [
-						"@babel/preset-env"
-					]
-				}
-			]
-		]
 	}
 }
